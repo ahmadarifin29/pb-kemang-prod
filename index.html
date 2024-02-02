@@ -3,15 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arifin</title>
-    <h1>Hai Kids</h1>
-    <h2>Ini ayahmu pas masih belajar</h2>
+    <title>CRUD Example</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+    </style>
 </head>
 <body>
-    <script>
-        alert('Welcome bruh!');
-        alert('Oke, Kita Lanjut!');
-    </script>
-    
+
+<h2>CRUD Example</h2>
+
+<!-- Form for adding new data -->
+<form id="myForm">
+    <label for="itemName">Item Name:</label>
+    <input type="text" id="itemName" required>
+    <button type="button" onclick="addItem()">Add Item</button>
+</form>
+
+<!-- Display data in a table -->
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Item Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="dataBody">
+        <!-- Data will be displayed here -->
+    </tbody>
+</table>
+
+<script>
+    let data = []; // Array to store data
+
+    function addItem() {
+        // Get input value
+        const itemName = document.getElementById('itemName').value;
+
+        // Generate a unique ID (for simplicity, you might want to use a more robust method)
+        const itemId = new Date().getTime();
+
+        // Add new item to the data array
+        data.push({ id: itemId, name: itemName });
+
+        // Refresh the table
+        renderTable();
+
+        // Clear the input field
+        document.getElementById('itemName').value = '';
+    }
+
+    function deleteItem(itemId) {
+        // Filter out the item to be deleted
+        data = data.filter(item => item.id !== itemId);
+
+        // Refresh the table
+        renderTable();
+    }
+
+    function renderTable() {
+        const tableBody = document.getElementById('dataBody');
+
+        // Clear existing table rows
+        tableBody.innerHTML = '';
+
+        // Populate the table with data
+        data.forEach(item => {
+            const row = tableBody.insertRow();
+            row.innerHTML = `<td>${item.id}</td><td>${item.name}</td><td><button onclick="deleteItem(${item.id})">Delete</button></td>`;
+        });
+    }
+</script>
+
 </body>
 </html>
+
+
